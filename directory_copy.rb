@@ -1,3 +1,4 @@
+# months array
 # lets put all the students in an array 
 def input_students
   puts "Please enter students info"
@@ -11,10 +12,13 @@ def input_students
   hobby = gets.chomp
   puts "country_of_birth"
   country_of_birth = gets.chomp
+  puts "Enter your cohort"
+  cohort = gets.chomp
   # while name is not empty, repeat this code
   while !name.empty? do
+    months = ['January' => :January, 'February' => :February]
     #add the student hash to the array
-    students << {name: name, cohort: :november, hobby: hobby, country_of_birth: country_of_birth, }
+    students << {name: name, cohort: months[cohort], hobby: hobby, country_of_birth: country_of_birth, }
     puts "now we have #{students.count} students"
     # get another name from the user
     puts "Enter another student"
@@ -24,6 +28,8 @@ def input_students
     hobby = gets.chomp
     puts "country of birth:"
     country_of_birth = gets.chomp
+    puts "Enter your cohort"
+    cohort = gets.chomp
   end
   #return the array of students
   students
