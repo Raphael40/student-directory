@@ -9,11 +9,16 @@ def input_students
   # while name is not empty, repeat this code
   while !name.empty? do
     #add the student hash to the array
-    @students << {name: name, cohort: :november}
+    append(name)
+    puts "Name has been entered"
     puts "now we have #{@students.count} students"
     # get another name from the user
-    name = STDINgets.chomp
+    name = STDIN.gets.chomp
   end
+end
+
+def append(name, cohort = :november)
+  @students << {name: name, cohort: cohort}
 end
 
 def print_students_list
@@ -47,26 +52,29 @@ def save_students
     file.puts csv_line
   end
   file.close
+  puts "Students have been saved"
 end
 
 def try_load_students
-  filename = ARGV.first
+  filename = ARGV.first || "students.csv"
   return if filename.nil?
   if File.exist?(filename)
     load_students(filename)
     puts "Loaded #{@students.count} from #{filename}"
-  else 
+  else
     puts "Sorry, #{filename} doesn't exist."
     exit
+  end
 end
 
 def load_students(filename = "students.csv")
-  file = File.open("filename", "r")
+  file = File.open(filename, "r")
   file.readlines.each do |line|
-  name, cohort = line.chomp.split(',')
-    @students << {name: name, cohort: cohort.to_sym}
+    name, cohort = line.chomp.split(',')
+    append(name, cohort.to_sym)
   end
   file.close
+  puts "Student files have been loaded"
 end
 
 def print_menu
