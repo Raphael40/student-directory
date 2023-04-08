@@ -17,7 +17,7 @@ def input_students
   # while name is not empty, repeat this code
   while !name.empty? do
     valid_months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December", :Secret]
-    if !valid_months.include? cohort
+    until valid_months.include? cohort
       puts "Wrong spelling try again"
       cohort = gets.chomp.capitalize
     end
