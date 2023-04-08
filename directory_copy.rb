@@ -13,23 +13,31 @@ def input_students
   puts "country_of_birth"
   country_of_birth = gets.chomp
   puts "Enter your cohort"
-  cohort = gets.chomp
+  cohort = gets.chomp.capitalize
   # while name is not empty, repeat this code
   while !name.empty? do
-    months = ['January' => :January, 'February' => :February]
+    valid_months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December", :Secret]
+    if !valid_months.include? cohort
+      puts "Wrong spelling try again"
+      cohort = gets.chomp.capitalize
+    end
     #add the student hash to the array
-    students << {name: name, cohort: months[cohort], hobby: hobby, country_of_birth: country_of_birth, }
+    students << {name: name, cohort: cohort.to_sym, hobby: hobby, country_of_birth: country_of_birth, }
     puts "now we have #{students.count} students"
     # get another name from the user
     puts "Enter another student"
     puts "name:"
     name = gets.chomp
+    break if name.empty?
     puts "hobby:"
     hobby = gets.chomp
     puts "country of birth:"
     country_of_birth = gets.chomp
     puts "Enter your cohort"
-    cohort = gets.chomp
+    cohort = gets.chomp.capitalize
+    if cohort.empty? 
+      cohort = :Secret
+    end
   end
   #return the array of students
   students
@@ -46,8 +54,7 @@ def print(students)
   # printing the students with a loop
   count = 0
   until count == students.length
-    puts "#{count + 1}. #{students[count][:name]} (#{students[count][:cohort]} cohort,
-    hobby: #{students[count][:hobby]}, country of birth: #{students[count][:country_of_birth]})"
+    puts "#{count + 1}. #{students[count][:name]} (#{students[count][:cohort]} cohort, hobby: #{students[count][:hobby]}, country of birth: #{students[count][:country_of_birth]})"
     count += 1
   end
 end
