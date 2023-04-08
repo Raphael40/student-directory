@@ -43,8 +43,14 @@ def show_students
 end
 
 def save_students
+  # Ask for filename
+  puts "What would you like to name your file, press enter to use student.csv default name"
+  file_name = gets.chomp
+  if file_name.empty?
+    file_name = "students.csv"
+  end
   # open the file for writing
-  file = File.open("students.csv", "w")
+  file = File.open(file_name, "w")
   #iterate over the array of students
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
@@ -67,7 +73,12 @@ def try_load_students
   end
 end
 
-def load_students(filename = "students.csv")
+def load_students
+  puts "Available student data files:"
+  Dir.glob("*.csv") { |file| puts file }
+  puts "Specify which one you would like to load"
+  filename = gets.chomp
+  filename = "students.csv" if filename.empty?
   file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(',')
@@ -80,8 +91,8 @@ end
 def print_menu
     puts "1. Input the students"
     puts "2. Show the students"
-    puts "3. Save the list to students.csv"
-    puts "4. Load the list of students"
+    puts "3. Save the list to a file"
+    puts "4. Load the list of students from a file"
     puts "9. Exit"
 end
 
