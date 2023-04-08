@@ -20,9 +20,12 @@ def input_students
     until valid_months.include? cohort
       puts "Wrong spelling try again"
       cohort = gets.chomp.capitalize
+      if cohort.empty? 
+        cohort = :Secret
+      end
     end
     #add the student hash to the array
-    students << {name: name, cohort: cohort.to_sym, hobby: hobby, country_of_birth: country_of_birth, }
+    students << { name: name, cohort: cohort.to_sym, hobby: hobby, country_of_birth: country_of_birth }
     puts "now we have #{students.count} students"
     # get another name from the user
     puts "Enter another student"
@@ -52,10 +55,21 @@ def print(students)
   # end
   
   # printing the students with a loop
-  count = 0
-  until count == students.length
-    puts "#{count + 1}. #{students[count][:name]} (#{students[count][:cohort]} cohort, hobby: #{students[count][:hobby]}, country of birth: #{students[count][:country_of_birth]})"
-    count += 1
+  # count = 0
+  # until count == students.length
+  #   if student[:name][0] == "M" && student[:name].length < 12
+  #     puts "#{count + 1}. #{students[count][:name]} (#{students[count][:cohort]} cohort, hobby: #{students[count][:hobby]}, country of birth: #{students[count][:country_of_birth]})"
+  #     count += 1
+  #   end
+  # end
+  
+  students_by_cohort = students.group_by { |student| student[:cohort] }
+  
+  students_by_cohort.each do |cohort, students|
+    puts "Students in #{cohort} cohort"
+      students.each_with_index do |student, num|
+        puts "#{num + 1}. #{student[:name]} (#{student[:cohort]} cohort, hobby: #{student[:hobby]}, country of birth: #{student[:country_of_birth]})"
+      end
   end
 end
 
