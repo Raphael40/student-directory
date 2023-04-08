@@ -14,6 +14,9 @@ def input_students
   country_of_birth = gets.chomp
   puts "Enter your cohort"
   cohort = gets.chomp.capitalize
+  if cohort.empty? 
+    cohort = :Secret
+  end
   # while name is not empty, repeat this code
   while !name.empty? do
     valid_months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December", :Secret]
@@ -79,7 +82,11 @@ def print_header
 end
 
 def print_footer(names)
-  puts "Overall, we have #{names.count} great students"
+  if names.count > 1
+    puts "Overall, we have #{names.count} great students"
+  else 
+    puts "Overall, we have #{names.count} great student"
+  end
 end
 
 students = input_students
