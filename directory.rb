@@ -1,3 +1,5 @@
+require 'csv'
+
 @students = []
   
 # lets put all the students in an array 
@@ -50,11 +52,10 @@ def save_students
     file_name = "students.csv"
   end
   # open the file for writing
-  File.open(file_name, "w") do |file|
+  CSV.open(file_name, "w") do |csv|
     @students.each do |student|
       student_data = [student[:name], student[:cohort]]
-      csv_line = student_data.join(",")
-      file.puts csv_line
+      csv << student_data
     end
   end
   puts "Students have been saved"
@@ -78,11 +79,9 @@ def load_students
   puts "Specify which one you would like to load"
   filename = gets.chomp
   filename = "students.csv" if filename.empty?
-  File.open(filename, "r") do |file|
-    file.readlines.each do |line|
-      name, cohort = line.chomp.split(',')
-      append(name, cohort.to_sym)
-    end
+  CSV.foreach(filename) do |row|
+    name, cohort = row
+    append(name, cohort.to_sym)
   end
   puts "Student files have been loaded"
 end
